@@ -1,7 +1,8 @@
 workflows:
   android-native-build:
     name: Android Native AI Build
-    max_build_duration: 60
+
+    working_directory: android
 
     environment:
       java: 17
@@ -9,13 +10,13 @@ workflows:
     scripts:
       - name: Grant permissions
         script: |
-          chmod +x gradlew
+          chmod +x ./gradlew
 
       - name: Clean project
         script: |
           ./gradlew clean
 
-      - name: Build Release APK
+      - name: Build APK
         script: |
           ./gradlew assembleRelease
 
