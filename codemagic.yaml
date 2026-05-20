@@ -1,31 +1,23 @@
 workflows:
-  android-build:
-    name: Android AI App Build
+  android-native-build:
+    name: Android Native AI Build
     max_build_duration: 60
 
     environment:
-      vars:
-        PACKAGE_NAME: "com.example.aiapp"
-      flutter: stable
       java: 17
 
     scripts:
-      - name: Get dependencies
+      - name: Grant permissions
         script: |
-          flutter pub get
+          chmod +x gradlew
 
-      - name: Run tests (optional)
+      - name: Clean project
         script: |
-          flutter test || true
+          ./gradlew clean
 
-      - name: Build APK (Release)
+      - name: Build Release APK
         script: |
-          flutter build apk --release
+          ./gradlew assembleRelease
 
     artifacts:
-      - build/**/outputs/apk/**/*.apk
-
-    publishing:
-      email:
-        recipients:
-          - your-email@example.com
+      - app/build/outputs/apk/**/*.apk
